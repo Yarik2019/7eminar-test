@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6,p, span, a, div {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+button, input, section, option{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+button{
+    background: transparent;
+    border: 0px
+}
+button:focus{
+    outline: none;
+}
+
+a{
+    list-style: none;
+}
+
+/* background */
+
+.bg-black{
+    background: #232323;
+}
+.bg-dark{
+    background: #414141;
+}
+.bg-red{
+    background: #ED3434;
+}
+.bg-gray-white{
+    background: #F5F5F5;
+}
+
+.bg-gray-two-white{
+    background: #C4C4C4;
+}
+
+.bg-white{
+    background: #FFFFFF;
+}
+
+/* box-shadow */
+.box-shadow{
+    box-shadow: 0px 64px 44px rgba(0, 0, 0, 0.1);
+}
+
+/* color */
+.color-red{
+    color: #FF0000;
+}
+.color-black{
+    color: #000000;
+}
+.color-dark{
+    color: #3F3F3F;
+}
+.color-white{
+    color: #FFFFFF;
+}
+
+/* font-size */
+.font-size-12{
+    font-size: 12px;
+}
+.font-size-14{
+    font-size: 14px;
+}
+.font-size-16{
+    font-size: 16px;
+}
+.font-size-35{
+    font-size: 35px;
+}
+
+/* font-weight */
+.font-weight-300{
+    font-weight: 300;
+}
+
+.font-weight-500{
+    font-weight: 500;
+}
+.font-weight-700{
+    font-weight: 700;
+}
+
+/* line-heigh */
+.line-height-150{
+    line-height: 150%;
+}
+.line-height-41{
+    line-height: 41px;
+}
+
+/* height */
+.h-screen{
+    height: 100vh;
+}
+.h-full{
+    height: 100%;
+}
+
+/*  text-align */
+
+.text-center{
+    text-align: center;
+}
+
+
+/* padding */
+.py-19{
+    padding-top: 19px;
+    padding-bottom: 9px;
+}
+
+/* width */
+
+.w-full{
+    width: 100%;
+}
+
+.h-px{
+    height: 1px;
+}
+
+/* text uppercase */
+
+.text-uppercase{
+    text-transform: uppercase;
+}
