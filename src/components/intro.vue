@@ -1,83 +1,92 @@
 <template>
-    <div class="bg-dark menu" :class="menuBurger ? 'active' : ''">
-        <div class="container">
-            <div class="navbar-collapse d-xl-block d-xl-flex">
-                <ul class="navbar-nav d-xl-block d-xl-flex  flex-xl-row  me-auto">
-                    <li class="dropdown mr-24" :class="isActive ? 'active' : ''">
-                        <router-link class="dropbtn nav-link d-flex color-white color-hover font-weight-300" to="/"
-                            @click="menuDrop()">Усі
-                            відео</router-link>
-                        <div class="dropdown-content">
-                            <div class="half">
-                                <div class="tab gray">
-                                    <input id="tab-one" type="radio" name="tabs2">
-                                    <label for="tab-one" class="text-uppercase d-flex align-items-center">
-                                        <div class="span"><i class="fa-solid  fa fa-caret-right"></i></div> відео
-                                    </label>
-                                    <div class="tab-content">
-                                        <p>
-                                            <router-link :to="{ name: 'allVideo' }" class="vue-link">Усі відео (456)
-                                            </router-link>
-                                            <router-link :to="{ name: 'MyVideos' }" class="vue-link">Мої відео (15)
-                                            </router-link>
-                                            <router-link to="/" class="vue-link">Безкоштовно (45)</router-link>
-                                            <router-link to="/" class="vue-link">Новинки (34)</router-link>
-                                            <router-link to="/" class="vue-link">Останні переглянуті (32)</router-link>
-                                            <router-link to="/" class="vue-link">Мої обрані (14)</router-link>
+    <div style="position:relative">
+        <div class="bg-dark menu" :class="menuBurger ? 'active' : ''">
+            <div class="container">
+                <div class="navbar-collapse d-xl-block d-xl-flex">
+                    <ul class="navbar-nav d-xl-block d-xl-flex  flex-xl-row  me-auto">
+                        <li class="dropdown mr-24" :class="isActive ? 'active' : ''">
+                            <router-link class="dropbtn nav-link d-flex color-white color-hover font-weight-300" to="/"
+                                @click="menuDrop()">Усі
+                                відео</router-link>
 
-                                        </p>
+                            <div class="dropdown-content">
+                                <div class="half">
+                                    <div class="tab gray">
+                                        <input id="tab-one" type="radio" name="tabs2">
+                                        <label for="tab-one" class="text-uppercase d-flex align-items-center">
+                                            <div class="span"><i class="fa-solid  fa fa-caret-right"></i></div>
+                                            відео
+                                        </label>
+                                        <div class="tab-content">
+                                            <p>
+                                                <router-link :to="{ name: 'allVideo' }" class="vue-link">Усі відео
+                                                    ({{ allContentLength }})
+                                                </router-link>
+                                                <router-link :to="{ name: 'MyVideos' }" class="vue-link">Мої відео
+                                                    (15)
+                                                </router-link>
+                                                <router-link to="/" class="vue-link">Безкоштовно (45)</router-link>
+                                                <router-link to="/" class="vue-link">Новинки (34)</router-link>
+                                                <router-link to="/" class="vue-link">Останні переглянуті (32)
+                                                </router-link>
+                                                <router-link to="/" class="vue-link">Мої обрані (14)</router-link>
+
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab gray">
-                                    <input id="tab-two" type="radio" name="tabs2">
-                                    <label for="tab-two" class="text-uppercase d-flex align-items-center">
-                                        <div class="span"></div> КОНСУЛЬТАЦІЇ
-                                    </label>
-                                    <div class="tab-content">
-                                        <p> </p>
+                                    <div class="tab gray">
+                                        <input id="tab-two" type="radio" name="tabs2">
+                                        <label for="tab-two" class="text-uppercase d-flex align-items-center">
+                                            <div class="span"></div> КОНСУЛЬТАЦІЇ
+                                        </label>
+                                        <div class="tab-content">
+                                            <p> </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="tab gray">
-                                    <input id="tab-three" type="radio" name="tabs2">
-                                    <label for="tab-three" class="text-uppercase d-flex align-items-center">
-                                        <div class="span"></div> КОНСУЛЬТАЦІЇ
-                                    </label>
-                                    <div class="tab-content">
-                                        <p> </p>
+                                    <div class="tab gray">
+                                        <input id="tab-three" type="radio" name="tabs2">
+                                        <label for="tab-three" class="text-uppercase d-flex align-items-center">
+                                            <div class="span"></div> КОНСУЛЬТАЦІЇ
+                                        </label>
+                                        <div class="tab-content">
+                                            <p> </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="nav-item  mr-24">
-                        <router-link :to="{ name: 'DocumentsView' }"
-                            class="nav-link color-white color-hover font-weight-300 " href="#">Документи</router-link>
-                    </li>
-                    <li class="nav-item  mr-24">
-                        <router-link :to="{ name: 'TopicsView' }"
-                            class="nav-link color-white color-hover font-weight-300" href="#">Теми</router-link>
-                    </li>
-                    <li class="nav-item  mr-24">
-                        <a class="nav-link color-white color-hover font-weight-300" href="#">Автоматизація</a>
-                    </li>
-                    <li class="nav-item  mr-24 ">
-                        <a class="nav-link color-white color-hover font-weight-300 " href="#">Рубрики</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link color-white color-hover-two font-weight-300  bg-red personal-consultant"
-                            href="#">Особистий консультант</a>
-                    </li>
-                </ul>
-                <div class="nav-item d-flex">
-                    <button class="btn bg-red p-100 color-white color-hover-two font-weight-500 text-uppercase forward"
-                        href="#">передлатити</button>
+                        </li>
+                        <li class="nav-item  mr-24">
+                            <router-link :to="{ name: 'DocumentsView' }"
+                                class="nav-link color-white color-hover font-weight-300 " href="#">Документи
+                            </router-link>
+                        </li>
+                        <li class="nav-item  mr-24">
+                            <router-link :to="{ name: 'TopicsView' }"
+                                class="nav-link color-white color-hover font-weight-300" href="#">Теми</router-link>
+                        </li>
+                        <li class="nav-item  mr-24">
+                            <a class="nav-link color-white color-hover font-weight-300" href="#">Автоматизація</a>
+                        </li>
+                        <li class="nav-item  mr-24 ">
+                            <a class="nav-link color-white color-hover font-weight-300 " href="#">Рубрики</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link color-white color-hover-two font-weight-300  bg-red personal-consultant"
+                                href="#">Особистий консультант</a>
+                        </li>
+                    </ul>
+                    <div class="nav-item d-flex">
+                        <button
+                            class="btn bg-red p-100 color-white color-hover-two font-weight-500 text-uppercase forward"
+                            href="#">передлатити</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     name: 'vueIntor',
@@ -89,10 +98,11 @@ export default {
     methods: {
         menuDrop() {
             this.isActive = !this.isActive;
-        }
+        },
     },
     computed: {
         ...mapState(['menuBurger']),
+        ...mapGetters(['allContentLength'])
     },
 }
 </script>
@@ -305,6 +315,7 @@ export default {
     .menu.active {
         transform: translateX(0px);
         opacity: 1;
+        z-index: 100;
     }
 
     .personal-consultant {

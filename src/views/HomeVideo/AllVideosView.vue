@@ -1,54 +1,55 @@
 <template>
-  <div class="AllVideos bg-gray-white">
+  <div class="AllVideos bg-gray-white" :class="menuBurger ? '' : 'active'">
     <div class="container">
       <div class="d-flex justify-content-end">
-        <div class="containers-crad">
-          <h1 class="color-back font-size-35 font-weight-300 text-center py-19">Усі відео</h1>
+        <div class="containers-card">
+          <h1 class="color-back font-size-35 font-weight-300 title-header py-19">Усі відео</h1>
           <div class="w-full h-px bg-gray-two-white mb-9"></div>
           <div class="mb-25 d-flex justify-content-end">
             <div>
-              <select name="" id="">
-                <option value="">News</option>
+              <select name="" id="" v-model='selectedType'>
+                <option value="1">new Date</option>
+                <option value="2">old date</option>
               </select>
             </div>
-            <div class="icon nav-icon-1 ">
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
-              <span class="active"></span>
+
+            <div class="icon nav-icon-1 " @click="ClickCardBlock()">
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
+              <span :class="{ 'active': cardsBlocks.cardBlock }"></span>
             </div>
-            <div class="icon nav-icon-2">
-              <span></span>
-              <span></span>
-              <span></span>
+
+            <div class="icon nav-icon-2" @click="ClickCardList()">
+              <span :class="{ 'active': cardsBlocks.cardList }"></span>
+              <span :class="{ 'active': cardsBlocks.cardList }"></span>
+              <span :class="{ 'active': cardsBlocks.cardList }"></span>
             </div>
-          </div>
-          <div class="card-block">
-            <cardContent v-for="content in paginatedContent" :key="content.id" :content="content" />
           </div>
 
-          <div class="block-showMore d-flex justify-content-center ">
+          <div class="card-block" v-if="cardsBlocks.cardBlock">
+            <cardContentBlock v-for="content in paginatedContent" :key="content.id" :content="content" />
+          </div>
+          <div class="card-list" v-if="cardsBlocks.cardList">
+            <cardContentList v-for="content in paginatedContent" :key="content.id" :content="content" />
+          </div>
+
+          <div class="block-showMore d-flex justify-content-center " v-if="hasNextPage">
             <button class="d-flex align-items-center" @click="showMore()">
               <img src="../../assets/img/Group.png" alt="">
               <h5 class="ml-11 color-black font-size-12 font-weight-300  line-height-150">Показати ще...</h5>
             </button>
           </div>
 
-          <div class="block-pages d-flex justify-content-center">
-            <button @click="page = page - 1" v-if="page > 1">
-              <i class="page page-prev bg-white fa-solid fa-chevron-left"></i>
-            </button>
-            <button class="pages" :class="{ 'pagesActive': isActive === page }" @click="page = pageNumm"
-              v-for="pageNumm in allPages" :key='pageNumm'>{{ pageNumm }}</button>
-            <button @click="page = page + 1" v-if="hasNextPage">
-              <i class="page page-next bg-white fa-solid fa-chevron-right"></i>
-            </button>
-          </div>
+          <paginate :page-count="allPages" :click-handler="clickCallback" :prev-text="'<'" :next-text="'>'"
+            :container-class="'d-flex justify-content-center pages'">
+          </paginate>
+
         </div>
       </div>
     </div>
@@ -56,38 +57,49 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
-import cardContent from '@/components/cardContent.vue';
-import ContextDataServices from '@/api/services/ContextDataServices';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import cardContentBlock from '@/components/cardContentBlock.vue';
+import cardContentList from '@/components/cardContentList.vue';
+import Paginate from "vuejs-paginate-next";
 export default {
   name: 'AllVideosView',
   components: {
-    cardContent,
+    cardContentBlock,
+    cardContentList,
+    Paginate
   },
   data() {
     return {
-      contents: [],
       page: 1,
       numPage: 3,
-      isActive: null
+      selectedType: '',
+      cardsBlocks: {
+        cardBlock: true,
+        cardList: false
+      }
     }
   },
   methods: {
-    getContent() {
-      ContextDataServices.getData().then((response) => {
-        this.contents = response.data;
-        console.log(response.data)
-      })
+    ...mapActions(['getContent']),
+    ClickCardBlock() {
+      this.cardsBlocks.cardBlock = true;
+      this.cardsBlocks.cardList = false;
+    },
+    ClickCardList() {
+      this.cardsBlocks.cardBlock = false;
+      this.cardsBlocks.cardList = true;
+    },
+    clickCallback(pageNum) {
+      this.page = pageNum;
     },
     showMore() {
       this.numPage += 3;
-    }
+    },
   },
   computed: {
-    tooManyTickersAdded() {
-      return this.tickers.length > 4;
-    },
+    ...mapState(['menuBurger']),
+    ...mapGetters(['allContent']),
+
     startIndex() {
       return (this.page - 1) * this.numPage;
     },
@@ -95,20 +107,13 @@ export default {
       return this.page * this.numPage;
     },
     paginatedContent() {
-      return this.contents.slice(this.startIndex, this.endIndex);
+      return this.allContent.slice(this.startIndex, this.endIndex);
     },
     hasNextPage() {
-      return this.contents.length > this.endIndex;
+      return this.allContent.length > this.endIndex;
     },
     allPages() {
-      return this.contents.length / this.numPage;
-    }
-  },
-  watch: {
-    page(newValue) {
-      this.isActive = newValue;
-      console.log(newValue)
-      // this.loadUsers(page)
+      return this.allContent.length / this.numPage;
     }
   },
   created() {
@@ -122,17 +127,21 @@ export default {
   height: 100%;
 }
 
-.containers-crad {
-  max-width: 848px;
+.containers-card {
+  max-width: 831px !important;
   width: 100%;
+}
+
+.title-header {
+  text-align: center;
 }
 
 .card-block {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
   flex-wrap: wrap;
-  margin-bottom: 69px;
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-bottom: 50px;
 }
 
 
@@ -265,6 +274,10 @@ export default {
   background: #ED3434;
 }
 
+/* card-list */
+.card-list {
+  margin-bottom: 69px
+}
 
 /* show more */
 .block-showMore {
@@ -277,34 +290,77 @@ export default {
 }
 
 /* pages */
-.block-pages {
-  margin-bottom: 100px;
-}
-
-.page {
-  padding: 11px 14px;
-  font-size: 15px;
-  border: 1px solid #C4C4C4;
-
-}
-
-.page-prev {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
 .pages {
-  padding: 11px 14px;
-  font-size: 10px;
-  border: 1px solid #C4C4C4;
+  list-style: none;
+  margin-bottom: 100px;
+  padding-left: 0 !important;
 }
 
-.pagesActive {
-  color: #ED3434;
+
+.page-link {
+  background: #eeeaea !important;
+  color: #000000 !important;
 }
 
-.page-next {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+.page-link:hover {
+  color: #ED3434 !important;
+  background-color: #FFFFFF !important;
+  border-color: transparent !important;
+}
+
+.page-item.active .page-link {
+  background-color: #FFFFFF !important;
+  color: #ED3434 !important;
+  border-color: transparent !important;
+}
+
+.page-item .disabled {
+  background-color: #FFFFFF !important;
+}
+
+.page-link:focus {
+  z-index: 3;
+  color: #ED3434 !important;
+  background-color: #FFFFFF !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+@media (max-width: 1200px) {
+  .AllVideos.active {
+    position: relative;
+    z-index: 50;
+  }
+}
+
+@media (max-width: 991px) {
+  .card-block {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .card-block {
+    justify-content: center;
+  }
+
+  .card-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .title-header {
+    text-align: start;
+  }
+
+  .card-block {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
 </style>

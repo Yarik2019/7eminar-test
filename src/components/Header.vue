@@ -1,7 +1,6 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg bg-black">
-
             <div class="container">
                 <button class="burger-menu_button" :class="menuBurger ? 'burger-menu_active' : ''"
                     @click="menuBurgerActive">
@@ -55,7 +54,8 @@ export default {
     height: 40px;
     background: #FFFFFF;
     border-radius: 5px;
-    padding: px;
+    position: relative;
+    /* padding: px; */
 }
 
 .search_input {
@@ -74,6 +74,54 @@ export default {
     transition: width 0.4s linear;
 }
 
+
+.searchbar:hover>.search_icon {
+    background: white;
+    color: #262D4A;
+}
+
+.search_icon {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10%;
+    color: #262D4A;
+    background: white;
+    text-decoration: none;
+}
+
+/* .searchbar {
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 40px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    
+}
+
+.search_input {
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color: transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.searchbar:hover>.search_input {
+    padding: 0 15px 10px;
+    width: 713px;
+    transition: width 0.4s linear;
+}
+
+
 .searchbar:hover>.search_icon {
     background: white;
     color: #262D4A;
@@ -90,7 +138,7 @@ export default {
     color: #262D4A;
 
     text-decoration: none;
-}
+} */
 
 /* margin */
 .ml-24 {
@@ -203,20 +251,41 @@ export default {
         transform: rotate(-45deg);
     }
 
+    /* search */
+    .searchbar:hover>.search_input {
+        width: 400px;
+    }
 }
 
-@media (max-width: 991px) {}
+@media (max-width: 992px) {
+
+    /* search */
+    .searchbar:hover>.search_input {
+        width: 200px;
+    }
+
+    .search_icon {
+        top: 2px;
+        color: white;
+        background: transparent;
+
+    }
+
+    .searchbar:hover>.search_icon {
+        background: transparent;
+    }
+}
 
 @media (max-width: 768px) {
 
     /* search */
-    .searchbar {
-        height: 20px;
+    .searchbar:hover>.search_input {
+        width: 200px;
     }
 
-    .search_icon {
-        height: 20px;
-        width: 20px;
+    /* dot-user */
+    .dot-user {
+        right: 0px;
     }
 
     /* logos  */
